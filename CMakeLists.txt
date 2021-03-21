@@ -6,11 +6,18 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 project(Benchmark)
 
+option(BENCHMARKING "Enable bencharking" OFF)
+
 add_subdirectory(external/Catch2)
 
-add_executable(Benchmark main.cpp Factorial.cpp Fibonacci.cpp)
-target_link_libraries(Benchmark PRIVATE Catch2::Catch2)
+add_executable(tests main.cpp Factorial.cpp Fibonacci.cpp)
+target_link_libraries(tests PRIVATE Catch2::Catch2)
 
-# include(CTest)
-# include(external/Catch2/contrib/Catch.cmake)
-# catch_discover_tests(tests)
+if(BENCHMARKING)
+target_compile_definitions(tests PUBLIC CATCH_CONFIG_ENABLE_BENCHMARKING)
+endif(BENCHMARKING)
+
+include(CTest)
+include(external/Catch2/contrib/Catch.cmake)
+catch_discover_tests(tests)
+

@@ -1,4 +1,3 @@
-#define CATCH_CONFIG_ENABLE_BENCHMARKING
 #include "catch2/catch.hpp"
 
 namespace {
@@ -13,6 +12,7 @@ TEST_CASE("Fibonacci")
   CHECK(Fibonacci(0) == 1);
   CHECK(Fibonacci(5) == 8);
 
+#if defined(CATCH_CONFIG_ENABLE_BENCHMARKING)
   BENCHMARK("Fibonacci 20")
   {
     return Fibonacci(20);
@@ -41,4 +41,5 @@ TEST_CASE("Fibonacci")
       return Fibonacci(35);
     });
   };
+#endif
 }
